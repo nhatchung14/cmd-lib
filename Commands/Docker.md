@@ -29,30 +29,24 @@ RUN apt-get install -y cmake git pkg-config libgtk-3-dev \
 **Build the Dockerfile**
 We assume that the dockerfile is located in the current directory `.`
 Then, we build the dockerfile with a `name` and a `tag` as follow:
-```
-$ docker build -t name:tag .
+``` bash
+docker build -t name:tag .
 ```
 
 # Initial run the image and initialize the container
 There are some flags that we need to refer:
++ `-it` is for interactive mode
 + `--gpu` to specify GPU that we need to use
 + `-v` for mapping a local folder to "remote" folder in container
 + `-p` for port mapping
 + `--name` to indicate the name of container
 
-We run the Docker image as following sample command:
-```
-$ docker run -it --gpus all \
-	-v /home/hung/Documents/docker-workspace/10.1-devel-ubuntu18.04/workspace:/home/workspace \
-	--name container-1.0 \
-	phithangcung/10.1-cudnn7-ubuntu18.04:1.0
-```
-The general syntax is:
-```
-$ docker run -it --gpus all \
+We run the Docker image as following command:
+``` bash
+docker run -it --gpus all \
     -v <machine folder>:<container folder> \
     -p 8888:8888 -p xxxxx:yyyyy \
-    -name <container-name> \
+    --name <container-name> \
     <docker-image>
 ```
 
@@ -60,18 +54,21 @@ $ docker run -it --gpus all \
 ## Link docker container display to host machine:
 
 1. Set up Docker Container connection to display
+``` bash
+xauth list
 ```
-$ xauth list
-g531/unix:  MIT-MAGIC-COOKIE-1  d323cfe33a738d7f078b7d984b760a83
-```
+
+It should show something like...
+
+> g531/unix:  MIT-MAGIC-COOKIE-1  d323cfe33a738d7f078b7d984b760a83
 
 2. Use Docker, run command with the following additional parameters `--net=host -e DISPLAY -v /tmp/.X11-unix`:
 ```
-$ docker run -it --gpus all \
-	-v /home/hung/Documents/docker-workspace/10.1-devel-ubuntu18.04/workspace:/home/workspace \
+docker run -it --gpus all \
+	-v <machine folder>:<container folder> \
 	--net=host -e DISPLAY -v /tmp/.X11-unix \
-	--name container-1.0 \
-	phithangcung/10.1-cudnn7-ubuntu18.04:1.0
+	--name <container name> \
+	<docker image>
 ```
 
 3. Connect display: Remember to add the index of the display `<0 or 1>` in the command
@@ -84,60 +81,60 @@ $ xauth add g531/unix:1   MIT-MAGIC-COOKIE-1  d323cfe33a738d7f078b7d984b760a83
 
 # Re-run Docker image
 To reattach exitted container:
-```
-$ docker start <container name> && docker attach <container name>
+``` bash
+docker start <container name> && docker attach <container name>
 ```
 **Create another bash shell of the same container:**
-```
-$ docker exec -it <container name> /bin/bash
+``` bash
+docker exec -it <container name> /bin/bash
 ```
 
 
 # Commit container to a docker image: 
 To commit the container, we perform (`<new img tag>` is optional):
-```
-$ docker commit <container id> <new img name>:<new img tag>
+``` bash
+docker commit <container id> <new img name>:<new img tag>
 ```
 
 # Pushing to DockerHub:
 1. Login: docker login
 2. Tag image to upload: 
-```
-$ docker tag \
+``` bash
+docker tag \
     <local-img-name>:<local-img-tag> <repository-on-DockerHub>:<tag-image-uploaded>
 ```
 3. Push to DockerHub: 
-```
-$ docker push <repository-on-DockerHub>:<tag-image-uploaded>
+``` bash
+docker push <repository-on-DockerHub>:<tag-image-uploaded>
 ```
 
 
 # List Docker images and containers
 ## List Docker images
-```
-$ docker images
+``` bash
+docker images
 ```
 
 ## List Docker containers
-```
-$ docker ps -a
+``` bash
+docker ps -a
 ```
 
 # Remove Docker images and containers
 ## Remove Docker images
-```
-$ docker image rm <image_name:image_tag>
+``` bash
+docker image rm <image_name:image_tag>
 ```
 or
-```
-$ docker image rm <image id>
+``` bash
+docker image rm <image id>
 ```
 
 ## Remove Docker containers
-```
-$ docker container rm <container-name>
+``` bash
+docker container rm <container-name>
 ```
 or
-```
-$ docker container rm <container-id>
+``` bash
+docker container rm <container-id>
 ```
