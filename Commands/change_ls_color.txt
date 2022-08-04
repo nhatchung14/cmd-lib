@@ -1,0 +1,6 @@
+dircolors -p > ~/.dircolors
+
+<CHANGE-COLOR-CODE-AS-NEEDED>
+
+test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
