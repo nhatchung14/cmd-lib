@@ -20,6 +20,6 @@ curl -Lb ./cookie "https://drive.google.com/uc?export=download&`echo ${html}|gre
 
 # Download from One Drive
 
-wget "https://mphcmiuedu-my.sharepoint.com/:u:/g/personal/<File_Download_Path>&download=1" -O <File_Name>
+wget "<Shared_File_Link>&download=1" -O <File_Name>
 
 
