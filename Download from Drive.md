@@ -3,6 +3,8 @@
 ## WGET
 > wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=12QR9wQD7I-wCEy2BpwP6NZkaATjypITr' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=12QR9wQD7I-wCEy2BpwP6NZkaATjypITr" -O dataset2014.zip && rm -rf /tmp/cookies.txt
 
+> 1fSG0ZaCyIXkzHM-oifpzRZjPRlxtnt-J
+
 ## CURL
 > nano download.sh
 
